@@ -30,14 +30,10 @@ public class RunGame {
             String word = Input.getString();
             if(word.length()>1) {
                 winner = printGuess(game.getSecret(), word);
+                }else winner = guess(word);
             }
-            else winner = guess(word);
-            if(getCopySecret().toString().contains("_"))
-                System.out.println(" not correct!");
-            else
-                System.out.println("correct guess!");
-            }
-        System.out.println(game.getFelGuess());
+
+        //System.out.println(game.getFelGuess());
 
         }
 
@@ -47,14 +43,24 @@ public class RunGame {
         game.setGuessAmount(no);
 
             for (int i = 0; i < game.getSecretArray().length; i++) {
-                if (game.getSecretArray().toString().equals(word))
-                    return true;
                 if (game.getSecretArray()[i] == word.charAt(0)) {
-                    setCopySecret(word.charAt(0), i);
-                } else
-                    game.setFelGuess(word);
-            }
-        System.out.println(getCopySecret());
+                    if(getCopySecret()[i]== '_') {
+                        setCopySecret(word.charAt(0), i);
+
+                    }
+                    else
+                    {
+                        System.out.println(" the char is already in the word");
+                        no--;
+                        game.setGuessAmount(no);
+                    }
+                }
+            }if(!(game.getSecretArray().toString().contains(word))){
+            game.setFelGuess(word);
+        }
+        if (game.getSecretArray().toString().equals(getCopySecret()))
+            return true;
+        System.out.println( getCopySecret());
         return false;
         }
 
@@ -62,8 +68,6 @@ public class RunGame {
     public boolean printGuess(String str, String input)
     {
         char [] Word = new char[str.length()];
-
-        System.out.println(getCopySecret());
         System.out.println("your input " + input);
 
         for (int i = 0; i < str.length(); i ++) {
@@ -76,9 +80,11 @@ public class RunGame {
                 {
                     Word[i] = '_';
                 }
+                System.out.println("winner!");
                 return true;
             }
         }
+        System.out.println("you lose!");
         return false;
 
     }

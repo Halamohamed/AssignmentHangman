@@ -15,6 +15,7 @@ public class Hangman {
         this.guessAmount = 1;
         this.maxGuess = 8;
         this.secretArray = secret.toCharArray();
+        this.felGuess= "";
 
     }
 
@@ -24,7 +25,7 @@ public class Hangman {
     }
 
     public void setFelGuess(String felGuess) {
-        this.felGuess = ""+felGuess ;
+        this.felGuess += felGuess ;
     }
 
     public String getSecret() {

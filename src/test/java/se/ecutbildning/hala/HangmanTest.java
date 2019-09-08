@@ -30,15 +30,13 @@ public class HangmanTest
     char[] word = {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
     @Before
     public void game(){
-         secret = hangman.getSecret().toString();
+         secret = hangman.getSecret();
          copySecret = hangman.getWordToGuess();
 
         while (!winner & amount<=max){
             amount++;
             for (int i= 0; i<word.length; i++)
                 guess = String.valueOf(random.nextInt(26)) ;
-            if(guess.length()>1)
-                winner=runGame.printGuess(secret,guess);
             winner = runGame.guess(guess);
         }
     }

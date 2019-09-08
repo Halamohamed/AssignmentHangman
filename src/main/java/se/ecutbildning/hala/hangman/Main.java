@@ -14,7 +14,7 @@ public class Main {
             RunGame runGame = new RunGame(hangman);
             System.out.println(String.copyValueOf(runGame.getCopySecret()));
             runGame.spela();
-            //System.out.println(hangman.getFelGuess());
+            System.out.println(" your fel guessing :" + hangman.getFelGuess());
             System.out.println("would you like to quite (y/n)");
             switch (Input.getchar()){
                 case 'y':
