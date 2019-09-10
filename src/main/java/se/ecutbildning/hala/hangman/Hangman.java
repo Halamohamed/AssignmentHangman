@@ -25,7 +25,7 @@ public class Hangman {
     }
 
     public void setFelGuess(String felGuess) {
-        this.felGuess += felGuess ;
+        this.felGuess += felGuess.toUpperCase() ;
     }
 
     public String getSecret() {

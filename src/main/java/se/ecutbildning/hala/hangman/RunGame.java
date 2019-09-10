@@ -19,7 +19,8 @@ public class RunGame {
     }
 
     public void setCopySecret(char copySecret,int i) {
-        this.copySecret[i] = copySecret;
+        String cs = String.valueOf(copySecret).toUpperCase();
+        this.copySecret[i] = cs.charAt(0);
     }
 
     public void spela() {
@@ -30,7 +31,13 @@ public class RunGame {
             String word = Input.getString();
             if(word.length()>1) {
                 winner = printGuess(game.getSecret(), word);
-                }else winner = guess(word);
+                }else {
+                winner = guess(word);
+                if(getCopySecret().toString().equalsIgnoreCase(game.getSecret()))
+                    System.out.println("winner!");
+            }
+            //System.out.println(" game over!");
+
             }
 
         //System.out.println(game.getFelGuess());
@@ -41,45 +48,36 @@ public class RunGame {
     public boolean guess(String word) {
         no++;
         game.setGuessAmount(no);
-
             for (int i = 0; i < game.getSecretArray().length; i++) {
-                if (game.getSecretArray()[i] == word.charAt(0)) {
+                if (String.valueOf(game.getSecretArray()[i]).equalsIgnoreCase(word)) {
                     if(getCopySecret()[i]== '_') {
-                        setCopySecret(word.charAt(0), i);
-
-                    }
-                    else
-                    {
+                        setCopySecret(word.charAt(0), i); }
+                    else {
                         System.out.println(" the char is already in the word");
                         no--;
-                        game.setGuessAmount(no);
-                    }
+                        game.setGuessAmount(no); }
+                    if( word.charAt(0)!= getCopySecret()[i])
+                    game.setFelGuess(word);
                 }
-            }if(!(game.getSecretArray().toString().contains(word))){
-            game.setFelGuess(word);
-        }
+            }
         if (game.getSecretArray().toString().equals(getCopySecret()))
             return true;
         System.out.println( getCopySecret());
         return false;
         }
 
-
     public boolean printGuess(String str, String input)
     {
         char [] Word = new char[str.length()];
         System.out.println("your input " + input);
-
         for (int i = 0; i < str.length(); i ++) {
             for (int j = 0; i < input.length(); j++) {
                 if(input.charAt(i) == str.charAt(j))
                 {
                     Word[j] = str.charAt(i);
                 }
-                else if (i == 0)
-                {
-                    Word[i] = '_';
-                }
+                else if (i == 0) {
+                    Word[i] = '_'; }
                 System.out.println("winner!");
                 return true;
             }
