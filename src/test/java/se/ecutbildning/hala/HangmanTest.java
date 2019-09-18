@@ -1,57 +1,61 @@
 package se.ecutbildning.hala;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import se.ecutbildning.hala.hangman.Hangman;
-import se.ecutbildning.hala.hangman.RunGame;
-
-import java.util.Random;
 
 /**
- * Unit test for simple App.
+ * Unit test for hangman.
  */
 public class HangmanTest
 {
-    /**
-     * Hangman Test :-)
-     */
-    private static Hangman hangman = new Hangman();
-    private static RunGame runGame = new RunGame(hangman);
-    String secret;
-    String copySecret;
-    boolean winner;
-    int amount = 0;
-    int max = 8;
-    String guess;
-    static Random random = new Random();
-    char[] word = {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
-    @Before
+    private static Hangman hangman ;
+
+
+     @Before
     public void game(){
-         secret = hangman.getSecret();
-         copySecret = hangman.getWordToGuess();
+         hangman = new Hangman("hangman");
 
-        while (!winner & amount<=max){
-            amount++;
-            for (int i= 0; i<word.length; i++)
-                guess = String.valueOf(random.nextInt(26)) ;
-            winner = runGame.guess(guess);
-        }
+
     }
     @Test
-    public void test_secret_with_getWordToGuess()
+    public void test_correct_word()
     {
-        Assert.assertEquals(secret,hangman.getSecret());
+        String word = "hangman";
+        char letter = 'n';
+        Assert.assertTrue(hangman.checkGuess(word));
+        Assert.assertTrue(hangman.guess(letter));
+        Assert.assertEquals(true,hangman.winner());
+
+
 
     }
     @Test
-    public void test_spela(){
+    public void test_incorrect(){
+        String word = "";
+        char letter = 'l';
+        int expected = 1;
+        Assert.assertFalse(hangman.checkGuess(word));
+        Assert.assertFalse(hangman.guess(letter));
+        Assert.assertEquals(String.valueOf(letter), hangman.felGuess.toString());
+        Assert.assertEquals(expected, hangman.getGuessAmount());
 
-        Assert.assertTrue(secret, runGame.printGuess(secret, guess));
-        Assert.assertNotEquals(guess, runGame.guess(guess));
 
+    }
+    @Test
+    public void correct_created( ){
+
+        String letter = "H";
+        String expected = "_______";
+        Assert.assertEquals(expected,hangman.toString());
+        Assert.assertTrue(hangman.checkGuess(letter));
+        String expected1 = "h______";
+        assertEquals(expected1,hangman.toString());
+        Assert.assertEquals(false, hangman.winner());
 
     }
 }

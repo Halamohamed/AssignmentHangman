@@ -1,32 +1,38 @@
 package se.ecutbildning.hala.hangman;
 
-import java.util.Arrays;
-import java.util.Scanner;
+
+import java.util.Random;
 
 public class Main {
-
+    private static String[] secretList = {"program", "elefant","basket","cykel"};
+    static Random random = new Random();
     public static void main(String[] args) {
-        boolean keepAlive = false;
-        System.out.println("Hangman game: ");
-        System.out.println("Guess word :" );
-        do {
-            Hangman hangman = new Hangman();
-            RunGame runGame = new RunGame(hangman);
-            System.out.println(String.copyValueOf(runGame.getCopySecret()));
-            runGame.spela();
-            System.out.println(" All your guessing  :" + hangman.getFelGuess());
+        System.out.println("");
+        spelaGame();
             System.out.println("would you like to quite (y/n)");
-            switch (Input.getchar()){
-                case 'y':
-                    keepAlive= false;
-                    break;
+            switch (Input.getchar()) {
                 case 'n':
-                    keepAlive= true;
+                    spelaGame();
                     break;
                 default:
                     System.out.println("Bye!");
             }
-        }while (keepAlive);
+        }
+
+    public static void spelaGame(){
+        System.out.println("Welcome to Hangman game: ");
+        Hangman hangman = new Hangman("program");
+        do {
+            System.out.println("Guess word or letter" );
+            //System.out.println(String.copyValueOf(hangman.secretArray));
+            String word = Input.getString();
+            hangman.checkGuess(word);
+            // hangman.winner();
+            //System.out.println("All guessing : " + hangman.felGuess);
+            System.out.println(" fel guessed  :" + hangman.getGuessAmount() + " / " + hangman.maxGuess);
+            System.out.println(" the secret word is: " + hangman);
+
+        }while ( !hangman.winner() && hangman.getGuessAmount()<= hangman.maxGuess);
 
     }
 }

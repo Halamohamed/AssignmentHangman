@@ -19,7 +19,7 @@ public class Input {
         }return c;
     }
     public static String getString(){
-        return scanner.nextLine();
+        return scanner.nextLine().trim();
     }
 
     public static int getInt(){
